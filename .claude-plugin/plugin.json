@@ -1,0 +1,10 @@
+{
+  "name": "seedance-video",
+  "description": "Generate video with ByteDance Seedance 2.5 via OpenRouter — named presets for every common shape, the full flag surface, a preflight that checks OPENROUTER_API_KEY, and the measured price. Zero-dep Node, driven from SKILL.md.",
+  "author": {
+    "name": "Chirag Jain",
+    "url": "https://github.com/chirag2653"
+  },
+  "homepage": "https://github.com/chirag2653/seedance-video",
+  "license": "MIT"
+}

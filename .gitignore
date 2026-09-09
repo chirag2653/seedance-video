@@ -1,0 +1,9 @@
+# Renders and scratch — never committed.
+out/
+outputs/
+work/
+*.mp4
+*.png
+.env
+.env.*
+node_modules/
