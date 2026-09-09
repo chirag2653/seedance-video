@@ -9,8 +9,8 @@ Works in any repo. The only prerequisite is an `OPENROUTER_API_KEY` in the envir
 ## Install
 
 ```
-/plugin marketplace add chirag2653/claude-code-personal-toolkit
-/plugin install seedance-video@claude-code-personal-toolkit
+/plugin marketplace add chirag2653/public-claude-code-plugins
+/plugin install seedance-video@public-claude-code-plugins
 ```
 
 Then set the key once:
