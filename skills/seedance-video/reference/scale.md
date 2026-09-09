@@ -8,6 +8,7 @@ money the moment it returns, and there is no cancel.**
 
 ```bash
 dir="${CLAUDE_PLUGIN_ROOT:+$CLAUDE_PLUGIN_ROOT/skills/seedance-video}"
+[ -d "$dir" ] || dir=$(ls -d "$HOME"/.claude/plugins/cache/*/seedance-video/*/skills/seedance-video 2>/dev/null | head -1)
 [ -d "$dir" ] || dir="$HOME/.agents/skills/seedance-video"
 SCRIPT="$dir/scripts/seedance.mjs"
 ```

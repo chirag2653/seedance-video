@@ -74,3 +74,17 @@ node $S --job zh7gL6h9ld2ZAqZEWGHs --out /tmp/x.mp4    # the 2026-09-09 probe re
 - **`seed` determinism is unverified.** The vendor doc says it is not guaranteed per provider.
 - **The 480p rate is unverified** — advertised at USD 0.1028/s, never billed. The script warns.
 - **No real prompt has been rendered.** The only output that exists came from the prompt `"x"`.
+
+## Gotcha found on the first install (2026-09-09)
+
+**The plugin cache inserts a commit-SHA directory level:**
+
+```
+~/.claude/plugins/cache/<marketplace>/seedance-video/<sha>/skills/seedance-video/
+```
+
+`CLAUDE_PLUGIN_ROOT` points at the `<sha>` directory. A resolution snippet that falls back to
+`$HOME/.agents/skills/seedance-video` without globbing past the SHA resolves to a path that does not
+exist, and the failure surfaces much later as a bare Node `MODULE_NOT_FOUND` with no hint of the real
+cause. The snippet in `SKILL.md` therefore globs the cache as its second candidate and **fails loudly**
+if nothing is found. Do not simplify it back.

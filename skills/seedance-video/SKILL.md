@@ -29,9 +29,17 @@ This ships as a Claude Code plugin, so the script lives under the plugin root:
 
 ```bash
 dir="${CLAUDE_PLUGIN_ROOT:+$CLAUDE_PLUGIN_ROOT/skills/seedance-video}"
+[ -d "$dir" ] || dir=$(ls -d "$HOME"/.claude/plugins/cache/*/seedance-video/*/skills/seedance-video 2>/dev/null | head -1)
 [ -d "$dir" ] || dir="$HOME/.agents/skills/seedance-video"
+[ -f "$dir/scripts/seedance.mjs" ] || { echo "seedance-video not installed. /plugin install seedance-video@claude-code-personal-toolkit"; exit 1; }
 SCRIPT="$dir/scripts/seedance.mjs"
 ```
+
+⚠️ **The plugin cache inserts a commit-SHA directory**, so the installed path is
+`~/.claude/plugins/cache/<marketplace>/seedance-video/<sha>/skills/seedance-video/`. That is what
+`CLAUDE_PLUGIN_ROOT` points at, and it is why line 2 globs past the SHA when the variable is not set
+— a plain `$HOME/.agents/...` fallback resolves to nothing and fails later with an unhelpful
+`MODULE_NOT_FOUND`. The last line makes a miss say so immediately.
 
 Requires **Node 18+** (uses built-in `fetch`). Zero dependencies — nothing to install.
 
@@ -74,8 +82,9 @@ Presets set **audio off** — a generated voice is usually a defect, and most pi
 own sound. Pass `--audio` to keep the model's. **Any explicit flag overrides the preset**, so
 `--preset shorts-beat --duration 12` is a 12-second beat.
 
-**`--list-presets`, `--preflight` and `--price-only` are free** and the first two are the only ones
-that need a key.
+**`--list-presets`, `--preflight` and `--price-only` are all free.** Of the three, only
+`--preflight` needs a key — the other two work on a machine that has never seen one, so a session
+can budget before anyone hands it credentials.
 
 **[`reference/scale.md`](reference/scale.md) is the operating manual** — which preset for which job,
 how to add frame and reference control, the end-to-end recipes, and the rules that stop a batch
