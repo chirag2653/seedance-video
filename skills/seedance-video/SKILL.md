@@ -29,7 +29,7 @@ This ships as a Claude Code plugin, so the script lives under the plugin root:
 
 ```bash
 dir="${CLAUDE_PLUGIN_ROOT:+$CLAUDE_PLUGIN_ROOT/skills/seedance-video}"
-[ -d "$dir" ] || dir=$(ls -d "$HOME"/.claude/plugins/cache/*/seedance-video/*/skills/seedance-video 2>/dev/null | head -1)
+[ -d "$dir" ] || dir=$(ls -dt "$HOME"/.claude/plugins/cache/*/seedance-video/*/skills/seedance-video 2>/dev/null | head -1)
 [ -d "$dir" ] || dir="$HOME/.agents/skills/seedance-video"
 [ -f "$dir/scripts/seedance.mjs" ] || { echo "seedance-video not installed. /plugin install seedance-video@claude-code-personal-toolkit"; exit 1; }
 SCRIPT="$dir/scripts/seedance.mjs"

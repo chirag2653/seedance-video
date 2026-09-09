@@ -88,3 +88,20 @@ node $S --job zh7gL6h9ld2ZAqZEWGHs --out /tmp/x.mp4    # the 2026-09-09 probe re
 exist, and the failure surfaces much later as a bare Node `MODULE_NOT_FOUND` with no hint of the real
 cause. The snippet in `SKILL.md` therefore globs the cache as its second candidate and **fails loudly**
 if nothing is found. Do not simplify it back.
+
+## The cache-glob fallback must sort by TIME, not name (2026-09-09)
+
+Uninstalling from one marketplace and reinstalling from another **leaves the old cache directory on
+disk**. After moving this plugin from `claude-code-personal-toolkit` to `public-claude-code-plugins`,
+three directories existed:
+
+```
+claude-code-personal-toolkit/seedance-video/09f78d9e01c0   <- orphan
+claude-code-personal-toolkit/seedance-video/b2de442fad0d   <- orphan, older commit
+public-claude-code-plugins/seedance-video/09f78d9e01c0     <- the installed one
+```
+
+A plain `ls -d` glob sorts alphabetically and picks the **orphan**. It happened to be the same commit
+that day, so it worked and hid the bug; after the next update it would silently run stale code. The
+fallback therefore uses **`ls -dt`** (newest first). `CLAUDE_PLUGIN_ROOT` is still tried first and is
+correct at real runtime — the glob only matters for manual bash invocation.
