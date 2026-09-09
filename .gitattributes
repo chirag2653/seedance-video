@@ -1,0 +1,5 @@
+# Pin LF. This plugin runs on Windows, macOS, Linux and Claude Code on the web;
+# core.autocrlf on Windows would otherwise commit CR into the script and the docs.
+* text=auto eol=lf
+*.mp4 binary
+*.png binary
